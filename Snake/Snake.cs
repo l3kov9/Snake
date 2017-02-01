@@ -3,19 +3,20 @@
     using System;
     using System.Collections.Generic;
     using System.Threading;
-    class Snake
+    public class Snake
     {
-        static void Main()
+        
+        public static void Main()
         {
             Random random = new Random();
-            Console.BackgroundColor = ConsoleColor.DarkRed;
-            int x = 20;
-            int y = 10;
-            int directionX = 0;
-            int directionY = 1;
+            int startingX = 20;
+            int startingY = 15;
+            int directionX = 1;
+            int directionY = 0;
             char snakeHead = '@';
-            char snakeBody = '=';
+            char snakeBody = '+';
             char food = '*';
+            int finalResult = 0;
 
             int foodX = random.Next(0, Console.WindowWidth);
             int foodY = random.Next(0, Console.WindowHeight);
@@ -23,18 +24,22 @@
             List<int> snakeX = new List<int>();
             List<int> snakeY = new List<int>();
 
-            int snakeBodyCount = 5;
+            int snakeBodyCount = 7;
 
+            Console.WindowWidth = Console.WindowWidth/2;
+            Console.WindowHeight = Console.WindowHeight;
+            Console.BackgroundColor = ConsoleColor.DarkRed;
+            Console.Title = "Lekov's snake";
             var snakeColor = ConsoleColor.Black;
             var foodColor = ConsoleColor.White;
 
             for (int i = 0; i < snakeBodyCount; i++)
             {
-                x += directionX;
-                y += directionY;
+                startingX += directionX;
+                startingY += directionY;
 
-                snakeX.Add(x);
-                snakeY.Add(y);                
+                snakeX.Add(startingX);
+                snakeY.Add(startingY);                
             }
 
             while (true)
@@ -53,21 +58,33 @@
                         // check if left or right wall hit
                         if (snakeX[i] + directionX > Console.WindowWidth -1)
                         {
-                            snakeX[i] = 0;
+                            PrintGameOver(finalResult);
+
+                            Thread.Sleep(1);
+                            return;
                         }
                         if (snakeX[i] + directionX < 0)
                         {
-                            snakeX[i] = Console.WindowWidth - 1;
+                            PrintGameOver(finalResult);
+
+                            Thread.Sleep(1);
+                            return;
                         }
 
                         // check if up or down wall hit
                         if (snakeY[i] + directionY > Console.WindowHeight - 1)
                         {
-                            snakeY[i] = 0;
+                            PrintGameOver(finalResult);
+
+                            Thread.Sleep(1);
+                            return;
                         }
                         if (snakeY[i] + directionY < 0)
                         {
-                            snakeY[i] = Console.WindowHeight - 1;
+                            PrintGameOver(finalResult);
+
+                            Thread.Sleep(1);
+                            return;
                         }
 
                         snakeX[i] += directionX;
@@ -81,6 +98,7 @@
                             snakeX.Add(snakeX[i]);
                             snakeY.Add(snakeY[i]);
                             isCurrentlyEaten = true;
+                            finalResult++;
                         }
 
                         //check if on eaten myself
@@ -89,8 +107,9 @@
                             if (snakeX[i] == snakeX[j] &&
                                 snakeY[i] == snakeY[j] && !isCurrentlyEaten)
                             {
-                                Console.Clear();
-                                Console.WriteLine("Dead");
+                                PrintGameOver(finalResult);
+
+                                Thread.Sleep(1);
                                 return;
                             }
                         }
@@ -153,6 +172,42 @@
                 Thread.Sleep(100);
                 Console.Clear();
             }
+        }
+        private static void PrintGameOver(int finalResult)
+        {
+            Console.Clear();
+                      
+                Console.WriteLine($@"
+                       GAME OVER!!!!!!
+          TONIGHT YOU DINE IN HELL, MOTHERFUCKER !!!!
+                   RESULT: Shit Eaten - {finalResult}
+                         uuuuuuuuu
+                      uu$$$$$$$$$$$uu
+                   uu$$$$$$$$$$$$$$$$$uu
+                  u$$$$$$$$$$$$$$$$$$$$$u
+                 u$$$$$$$$$$$$$$$$$$$$$$$u
+                u$$$$$$$$$$$$$$$$$$$$$$$$$u
+                u$$$$$$$$$$$$$$$$$$$$$$$$$u
+                u$$$$$$     $$$      $$$$$u
+                u$$$$       u$u       $$$$u
+                u$$$u       u$u       u$$$u
+                 $$$u      u$$$u      u$$$
+                  u$$$$uu$$$   $$$uu$$$$u
+                   u$$$$$$$u   u$$$$$$$u
+                     u$$$$$$$u$$$$$$$u
+                      u$*$*$*$*$*$*$u
+           uuu        $$u$ $ $ $ $u$$       uuu
+          u$$$$        $$$$$u$u$u$$$       u$$$$
+           $$$$$uu      *$$$$$$$$$*     uu$$$$$$
+         u$$$$$$$$$$$uu    *****    uuuu$$$$$$$$$$
+         $$$$***$$$$$$$$$$uuu   uu$$$$$$$$$***$$$*
+          ***      ""$$$$$$$$$$$uu ""$""
+                    uuuu ""$$$$$$$$$$uuu
+           u$$$uuu$$$$$$$$$uu ""$$$$$$$$$$$uuu$$$
+           $$$$$$$$$$""""           ""$$$$$$$$$$$""
+            ""$$$$$""                      ""$$$$""
+              $$$""                         $$$$""");
+            
         }
     }
 }
