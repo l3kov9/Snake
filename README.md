@@ -1,1 +1,1 @@
-# Snake C#
+# Snake written in Visual Studio - C#!
