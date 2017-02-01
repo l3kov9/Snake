@@ -8,30 +8,33 @@
     {
         public static void Main()
         {
+            //ConsoleWidth=120,ConsoleHeight=30
             Random random = new Random();
-            int startingX = Console.WindowWidth;
-            int startingY = Console.WindowHeight / 4;
+            int startingX = 15;
+            int startingY = 10;
             int directionX = 1;
             int directionY = 0;
             char snakeHead = '@';
             char snakeBody = '+';
-            char food = '*';
+            //char food = '*';
             int finalResult = 0;
+            int bonusPoints = 0;
 
-            int foodX = random.Next(0, Console.WindowWidth);
-            int foodY = random.Next(0, Console.WindowHeight);
+
+            int foodX = random.Next(0, 49);
+            int foodY = random.Next(0, 24);
 
             List<int> snakeX = new List<int>();
             List<int> snakeY = new List<int>();
 
             int snakeBodyCount = 7;
 
-            Console.WindowWidth = Console.WindowWidth;
-            Console.WindowHeight = Console.WindowHeight;
-            Console.BackgroundColor = ConsoleColor.DarkRed;
+            Console.WindowWidth = 50;
+            Console.WindowHeight = 25;
+            Console.BackgroundColor = ConsoleColor.DarkBlue;
             Console.Title = "Lekov's snake";
-            var snakeColor = ConsoleColor.Black;
-            var foodColor = ConsoleColor.White;
+            var snakeColor = ConsoleColor.Yellow;
+            var foodColor = ConsoleColor.Cyan;
 
             for (int i = 0; i < snakeBodyCount; i++)
             {
@@ -55,8 +58,8 @@
                     }
                     else
                     {
-                        // die if you hit left or right wall
-                        if (snakeX[i] + directionX > Console.WindowWidth - 1)
+                        // die if you hit right wall
+                        if (snakeX[i] + directionX > 49)
                         {
                             PrintGameOver(finalResult);
 
@@ -64,6 +67,7 @@
                             return;
                         }
 
+                        // die if you hit left wall
                         if (snakeX[i] + directionX < 0)
                         {
                             PrintGameOver(finalResult);
@@ -71,9 +75,9 @@
                             Thread.Sleep(1);
                             return;
                         }
-
-                        // die if you hit up or down wall
-                        if (snakeY[i] + directionY > Console.WindowHeight - 1)
+                        
+                        // die if you hit down wall
+                        if (snakeY[i] + directionY > 24)
                         {
                             PrintGameOver(finalResult);
 
@@ -81,6 +85,7 @@
                             return;
                         }
 
+                        // die if you hit up wall
                         if (snakeY[i] + directionY < 0)
                         {
                             PrintGameOver(finalResult);
@@ -95,12 +100,14 @@
 
                         if (snakeX[i] == foodX && snakeY[i] == foodY)
                         {
-                            foodX = random.Next(0, Console.WindowWidth);
-                            foodY = random.Next(0, Console.WindowHeight);
+                            Console.Beep(9000, 150);
+
+                            foodX = random.Next(0, 49);
+                            foodY = random.Next(0, 24);
                             snakeX.Add(snakeX[i]);
                             snakeY.Add(snakeY[i]);
                             isCurrentlyEaten = true;
-                            finalResult++;
+                            finalResult += bonusPoints;
                         }
 
                         // die if you eat yourself
@@ -125,8 +132,29 @@
 
                 Console.ForegroundColor = foodColor;
                 Console.SetCursorPosition(foodX, foodY);
-                Console.Write(food);
 
+                DateTime dateTimeNow = DateTime.Now;
+                if(dateTimeNow.Second % 10 > 6)
+                {
+                    Console.WriteLine(3);
+                    bonusPoints = 3;
+                }
+                else if(dateTimeNow.Second % 10 > 3)
+                {
+                    Console.WriteLine(5);
+                    bonusPoints = 5;
+                }
+                else if(dateTimeNow.Second % 10>0)
+                {
+                    Console.WriteLine(9);
+                    bonusPoints = 9;
+                }
+                else
+                {
+                    foodX = random.Next(0, 49);
+                    foodY = random.Next(0, 24);
+                }
+   
                 // Collision checking
 
                 // Change
@@ -178,38 +206,33 @@
         private static void PrintGameOver(int finalResult)
         {
             Console.Clear();
-                      
-                Console.WriteLine($@"
-                       GAME OVER!!!!!!
-          TONIGHT YOU DINE IN HELL, MOTHERFUCKER !!!!
-                   RESULT: Shit Eaten - {finalResult}
-                         uuuuuuuuu
-                      uu$$$$$$$$$$$uu
-                   uu$$$$$$$$$$$$$$$$$uu
-                  u$$$$$$$$$$$$$$$$$$$$$u
-                 u$$$$$$$$$$$$$$$$$$$$$$$u
-                u$$$$$$$$$$$$$$$$$$$$$$$$$u
-                u$$$$$$$$$$$$$$$$$$$$$$$$$u
-                u$$$$$$     $$$      $$$$$u
-                u$$$$       u$u       $$$$u
-                u$$$u       u$u       u$$$u
-                 $$$u      u$$$u      u$$$
-                  u$$$$uu$$$   $$$uu$$$$u
-                   u$$$$$$$u   u$$$$$$$u
-                     u$$$$$$$u$$$$$$$u
-                      u$*$*$*$*$*$*$u
-           uuu        $$u$ $ $ $ $u$$       uuu
-          u$$$$        $$$$$u$u$u$$$       u$$$$
-           $$$$$uu      *$$$$$$$$$*     uu$$$$$$
-         u$$$$$$$$$$$uu    *****    uuuu$$$$$$$$$$
-         $$$$***$$$$$$$$$$uuu   uu$$$$$$$$$***$$$*
-          ***      ""$$$$$$$$$$$uu ""$""
-                    uuuu ""$$$$$$$$$$uuu
-           u$$$uuu$$$$$$$$$uu ""$$$$$$$$$$$uuu$$$
-           $$$$$$$$$$""""           ""$$$$$$$$$$$""
-            ""$$$$$""                      ""$$$$""
-              $$$""                         $$$$""");
-            
+            Console.WriteLine(
+$@"                    GAME OVER
+              RESULT: Shit Eaten - {finalResult}
+
+     TONIGHT YOU DINE IN HELL, MOTHERFUCKER !!!
+                    uuuuuuuuu
+                 uu$$$$$$$$$$$uu
+              uu$$$$$$$$$$$$$$$$$uu
+             u$$$$$$$$$$$$$$$$$$$$$u
+            u$$$$$$$$$$$$$$$$$$$$$$$u
+           u$$$$$$$$$$$$$$$$$$$$$$$$$u
+           u$$$$$$$$$$$$$$$$$$$$$$$$$u
+           u$$$$$$     $$$      $$$$$u
+           u$$$$       u$u       $$$$u
+           u$$$u       u$u       u$$$u
+            $$$u      u$$$u      u$$$
+             u$$$$uu$$$   $$$uu$$$$u
+              u$$$$$$$u   u$$$$$$$u
+                u$$$$$$$u$$$$$$$u
+                 u$*$*$*$*$*$*$u
+                 $$u$ $ $ $ $u$$       
+                  $$$$$u$u$u$$$       
+                   *$$$$$$$$$*   
+                      *****    ");
+            Console.Beep(1500, 700);
+            Console.Beep(1500, 700);
+            Console.Beep(1500, 4000);
         }
     }
 }
