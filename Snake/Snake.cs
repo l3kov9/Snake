@@ -3,14 +3,14 @@
     using System;
     using System.Collections.Generic;
     using System.Threading;
+
     public class Snake
     {
-        
         public static void Main()
         {
             Random random = new Random();
-            int startingX = 20;
-            int startingY = 15;
+            int startingX = Console.WindowWidth;
+            int startingY = Console.WindowHeight / 4;
             int directionX = 1;
             int directionY = 0;
             char snakeHead = '@';
@@ -26,7 +26,7 @@
 
             int snakeBodyCount = 7;
 
-            Console.WindowWidth = Console.WindowWidth/2;
+            Console.WindowWidth = Console.WindowWidth;
             Console.WindowHeight = Console.WindowHeight;
             Console.BackgroundColor = ConsoleColor.DarkRed;
             Console.Title = "Lekov's snake";
@@ -55,14 +55,15 @@
                     }
                     else
                     {
-                        // check if left or right wall hit
-                        if (snakeX[i] + directionX > Console.WindowWidth -1)
+                        // die if you hit left or right wall
+                        if (snakeX[i] + directionX > Console.WindowWidth - 1)
                         {
                             PrintGameOver(finalResult);
 
                             Thread.Sleep(1);
                             return;
                         }
+
                         if (snakeX[i] + directionX < 0)
                         {
                             PrintGameOver(finalResult);
@@ -71,7 +72,7 @@
                             return;
                         }
 
-                        // check if up or down wall hit
+                        // die if you hit up or down wall
                         if (snakeY[i] + directionY > Console.WindowHeight - 1)
                         {
                             PrintGameOver(finalResult);
@@ -79,6 +80,7 @@
                             Thread.Sleep(1);
                             return;
                         }
+
                         if (snakeY[i] + directionY < 0)
                         {
                             PrintGameOver(finalResult);
@@ -101,7 +103,7 @@
                             finalResult++;
                         }
 
-                        //check if on eaten myself
+                        // die if you eat yourself
                         for (int j = 0; j < snakeX.Count - 1; j++)
                         {
                             if (snakeX[i] == snakeX[j] &&
@@ -125,7 +127,7 @@
                 Console.SetCursorPosition(foodX, foodY);
                 Console.Write(food);
 
-                //Collision checking
+                // Collision checking
 
                 // Change
                 if (Console.KeyAvailable)
@@ -156,7 +158,6 @@
                             directionY = 1;
                             directionX = 0;
                         }
-
                     }
 
                     if (key.Key == ConsoleKey.UpArrow)
@@ -173,6 +174,7 @@
                 Console.Clear();
             }
         }
+
         private static void PrintGameOver(int finalResult)
         {
             Console.Clear();
