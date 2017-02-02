@@ -20,7 +20,6 @@
             int finalResult = 0;
             int bonusPoints = 0;
 
-
             int foodX = random.Next(0, 49);
             int foodY = random.Next(0, 24);
 
@@ -129,10 +128,9 @@
                     Console.SetCursorPosition(snakeX[i], snakeY[i]);
                     Console.Write(element);
                 }
-
                 Console.ForegroundColor = foodColor;
                 Console.SetCursorPosition(foodX, foodY);
-
+                int bonusNumber = 0;
                 DateTime dateTimeNow = DateTime.Now;
                 if(dateTimeNow.Second % 10 > 6)
                 {
