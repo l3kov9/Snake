@@ -206,9 +206,7 @@
             Console.Clear();
             Console.WriteLine(
 $@"                    GAME OVER
-              RESULT: Shit Eaten - {finalResult}
-
-     TONIGHT YOU DINE IN HELL, MOTHERFUCKER !!!
+                FINAL RESULT:  -   {finalResult}
                     uuuuuuuuu
                  uu$$$$$$$$$$$uu
               uu$$$$$$$$$$$$$$$$$uu
