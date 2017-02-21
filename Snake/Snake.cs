@@ -8,7 +8,7 @@
     {
         public static void Main()
         {
-            //ConsoleWidth=120,ConsoleHeight=30
+            // ConsoleWidth=120,ConsoleHeight=30
             Random random = new Random();
             int startingX = 15;
             int startingY = 10;
@@ -16,7 +16,7 @@
             int directionY = 0;
             char snakeHead = '@';
             char snakeBody = '+';
-            //char food = '*';
+            //// char food = '*';
             int finalResult = 0;
             int bonusPoints = 0;
 
@@ -128,11 +128,11 @@
                     Console.SetCursorPosition(snakeX[i], snakeY[i]);
                     Console.Write(element);
                 }
+
                 Console.ForegroundColor = foodColor;
                 Console.SetCursorPosition(foodX, foodY);
-                int bonusNumber = 0;
                 DateTime dateTimeNow = DateTime.Now;
-                if(dateTimeNow.Second % 10 > 6)
+                if((dateTimeNow.Second % 10) > 6)
                 {
                     Console.WriteLine(3);
                     bonusPoints = 3;
@@ -142,7 +142,7 @@
                     Console.WriteLine(5);
                     bonusPoints = 5;
                 }
-                else if(dateTimeNow.Second % 10>0)
+                else if(dateTimeNow.Second % 10 > 0)
                 {
                     Console.WriteLine(9);
                     bonusPoints = 9;
