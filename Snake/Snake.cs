@@ -20,8 +20,8 @@
             int finalResult = 0;
             int bonusPoints = 0;
 
-            int foodX = random.Next(0, 49);
-            int foodY = random.Next(0, 24);
+            int foodX = random.Next(0, 51);
+            int foodY = random.Next(0, 26);
 
             List<int> snakeX = new List<int>();
             List<int> snakeY = new List<int>();
@@ -132,27 +132,29 @@
                 Console.ForegroundColor = foodColor;
                 Console.SetCursorPosition(foodX, foodY);
                 DateTime dateTimeNow = DateTime.Now;
-                if((dateTimeNow.Second % 10) > 6)
-                {
-                    Console.WriteLine(3);
-                    bonusPoints = 3;
-                }
-                else if(dateTimeNow.Second % 10 > 3)
-                {
-                    Console.WriteLine(5);
-                    bonusPoints = 5;
-                }
-                else if(dateTimeNow.Second % 10 > 0)
+                if ((foodX) % 11==0)
                 {
                     Console.WriteLine(9);
                     bonusPoints = 9;
                 }
-                else
+                else if ((foodX) % 7 == 0)
                 {
-                    foodX = random.Next(0, 49);
-                    foodY = random.Next(0, 24);
+                    Console.WriteLine(8);
+                    bonusPoints = 8;
                 }
-   
+                else if ((foodX) % 11 == 0)
+                {
+                    Console.WriteLine(9);
+                    bonusPoints = 9;
+                }
+                else if ((foodX) % 11 == 0)
+                {
+                    Console.WriteLine(9);
+                    bonusPoints = 9;
+                }
+
+
+
                 // Collision checking
 
                 // Change
@@ -207,6 +209,8 @@
             Console.WriteLine(
 $@"                    GAME OVER
                 FINAL RESULT:  -   {finalResult}
+
+
                     uuuuuuuuu
                  uu$$$$$$$$$$$uu
               uu$$$$$$$$$$$$$$$$$uu
